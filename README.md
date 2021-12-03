@@ -1,8 +1,4 @@
 + 写完第17章
--
-代办
-+ 编辑删除文章的权限检测
--
 ```
 Username (leave blank to use 'root'): wzj
 Email address: 1191763804@qq.com

@@ -75,11 +75,11 @@ def article_delete(request, id):
 #安全删除文章
 @login_required(login_url='/userprofile/login/')
 def article_safe_delete(request, id):
-    
+    article = ArticlePost.objects.get(id=id)
+    user = User.objects.get(id=article.author_id)
     if request.method == 'POST':
-        # user = User.objects.get(id=id)
-        # if request.user != user:
-        #     return HttpResponse('你没有权限删除此用户信息。')
+        if request.user != user:
+            return HttpResponse('你没有权限删除此用户信息。')
         article = ArticlePost.objects.get(id=id)
         article.delete()
         return redirect('article:article_list')
@@ -98,11 +98,9 @@ def article_update(request, id):
 
     # 获取需要修改的具体文章对象
     article = ArticlePost.objects.get(id=id)
-    # user = User.objects.get(id=article['author_id'])
+    user = User.objects.get(id=article.author_id)
     # 判断用户是否为 POST 提交表单数据
     if request.method == "POST":
-        # if request.user != user:
-        #     return HttpResponse('你没有权限删除此用户信息。')
         # 将提交的数据赋值到表单实例中
         article_post_form = ArticlePostForm(data=request.POST)
         # 判断提交的数据是否满足模型的要求
@@ -118,6 +116,8 @@ def article_update(request, id):
             return HttpResponse("表单内容有误，请重新填写。")
     # 如果用户 GET 请求获取数据
     else:
+        if request.user != user:
+            return HttpResponse('你没有权限编辑此用户文章。')
         # 创建表单类实例
         article_post_form = ArticlePostForm()
         # 赋值上下文，将 article 文章对象也传递进去，以便提取旧的内容
