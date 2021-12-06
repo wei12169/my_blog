@@ -141,3 +141,7 @@ EMAIL_PORT = 25
 EMAIL_USE_TLS = True
 # 默认的发件人
 DEFAULT_FROM_EMAIL = 'wei12169\'blog <1191763804@qq.com>'
+
+#媒体文件位置
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
