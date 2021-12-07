@@ -1,8 +1,8 @@
-+ 写完第17章
++ 写完第19章
 ```
 Username (leave blank to use 'root'): wzj
 Email address: 1191763804@qq.com
-Password:123456 
+Password:******
 ```
 ```
 每当修改了models.py文件，都需要用makemigrations和migrate这两条指令迁移数据。
