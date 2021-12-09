@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.urls.base import reverse
 
 # Create your models here.
 #博客文章数据类型
@@ -32,3 +33,7 @@ class ArticlePost(models.Model):
     def __str__(self) -> str:
         #将文章标题返回
         return self.title
+
+    #获取文章地址
+    def get_absolute_url(self):
+        return reverse('article:article_detail', args=[self.id])

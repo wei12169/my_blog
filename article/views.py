@@ -2,6 +2,8 @@ from django.contrib.auth.models import User
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
 
+from comment.models import Comment
+
 from .forms import ArticlePostForm
 from .models import ArticlePost
 import markdown
@@ -47,6 +49,8 @@ def article_list(request):
 def article_detail(request, id):
     #取出相应的文章
     article = ArticlePost.objects.get(id=id)
+    #取出文章评论
+    comments = Comment.objects.filter(article=id)
 
     #浏览量 +1
     article.total_views += 1
@@ -65,7 +69,7 @@ def article_detail(request, id):
     )
     article.body = md.convert(article.body)
     #需要传递给模板的对象
-    context = {'article': article, 'toc': md.toc}
+    context = {'article': article, 'toc': md.toc, 'comments': comments}
     #载入模板，并返回context对象
     return render(request, 'article/detail.html', context)
 
