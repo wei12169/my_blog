@@ -1,7 +1,7 @@
 + 写完第27章
 ```
-Username (leave blank to use 'root'): wzj
-Email address: 1191763804@qq.com
+Username (leave blank to use 'root'): ******
+Email address: ******@qq.com
 Password:******
 ```
 ```
@@ -11,5 +11,5 @@ Password:******
 git add 添加文件
 git commit -m 提交修改并添加注释
 git push origin(远程) master(本地) #第一次推送加上-u参数一次性推送master所有内容
-要关联一个远程库，使用命令git remote add origin git@github.com:wei12169/repo-name.git；
+要关联一个远程库，使用命令git remote add origin git@github.com:******/repo-name.git；(星号处填写自己的用户名)
 ```
