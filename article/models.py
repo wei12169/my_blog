@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.db.models.deletion import CASCADE
 from django.utils import timezone
 from django.urls.base import reverse
+from taggit.managers import TaggableManager
 
 # Create your models here.
 
@@ -40,6 +41,9 @@ class ArticlePost(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     total_views = models.PositiveIntegerField(default=0)
+
+    #文章标签
+    tags = TaggableManager(blank=True)
 
     #内部类class Meta用于给model定义元数据
     class Meta:

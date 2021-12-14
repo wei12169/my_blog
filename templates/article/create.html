@@ -24,7 +24,7 @@
                 <!-- 文章栏目 -->
                 <div class="form-group">
                     <label for="column">栏目</label>
-                    <select class="form-control" 
+                    <select class="form-control col-3" 
                             id="column" 
                             name="column"
                     >
@@ -33,6 +33,17 @@
                             <option value="{{ column.id }}">{{ column }}</option>
                         {% endfor %}
                     </select>
+                </div>
+
+                <!-- 文章标签 -->
+                <div class="form-group">
+                    <label for="tags">标签</label>
+                    <input type="text" 
+                        class="form-control col-3" 
+                        id="tags" 
+                        name="tags"
+                        placeholder="多个标签用逗号隔开"
+                    >
                 </div>
 
                 <!-- 文章正文 -->

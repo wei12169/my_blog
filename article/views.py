@@ -7,7 +7,6 @@ from comment.models import Comment
 from .forms import ArticlePostForm
 from .models import ArticleColumn, ArticlePost
 import markdown
-import random
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 #引入Q对象
@@ -17,24 +16,35 @@ from django.db.models import Q
 def article_list(request):
     search = request.GET.get('search')
     order = request.GET.get('order')
+    column = request.GET.get('column')
+    tag = request.GET.get('tag')
+    #初始化查询集
+    article_list = ArticlePost.objects.all()
+    
+    #搜索查询集
     if search:
-        #根据GET请求中查询条件返回不同排序的对象数组
-        if order == 'total_views':
-            article_list = ArticlePost.objects.filter(
-                Q(title__icontains=search) |
-                Q(body__icontains=search)
-            ).order_by('-total_views')
-        else:
-            article_list = ArticlePost.objects.filter(
-                Q(title__icontains=search) |
-                Q(body__icontains=search)
-            )
+        article_list = article_list.filter(
+            Q(title__icontains=search) |
+            Q(body__icontains=search)
+        )
     else:
         search = ''
-        if order == 'total_views':
-            article_list = ArticlePost.objects.all().order_by('-total_views')
-        else:
-            article_list = ArticlePost.objects.all()
+
+    #栏目查询集
+    if column is not None and column.isdigit():
+        article_list = article_list.filter(column=column)
+    # if column and tag != 'None': # and column.isalpha():
+    #     columns = ArticleColumn.objects.get(title=column).id
+    #     article_list = article_list.filter(column=columns)
+
+    #标签查询集
+    if tag and tag != 'None':
+        article_list = article_list.filter(tags__name__in=[tag])
+
+    #查询集排序
+    if order == 'total_views':
+        article_list = article_list.order_by('-total_views')
+
     #每页显示文章数
     paginator = Paginator(article_list, 3)
     #获取url中的页码
@@ -42,7 +52,13 @@ def article_list(request):
     #将导航对象相应的页码内容返回给articles
     articles = paginator.get_page(page)
     #需要传递给模板的对象
-    context = {'articles': articles, 'order': order, 'search': search}
+    context = {
+            'articles': articles, 
+            'order': order, 
+            'search': search,
+            'column': column,
+            'tag': tag,
+    }
     #render函数，载入模板，并返回context对象
     return render(request, 'article/list.html', context)
 
@@ -91,6 +107,8 @@ def article_create(request):
                 new_article.column = ArticleColumn.objects.get(id=request.POST['column'])
             #将新文章保存到数据库中
             new_article.save()
+            #保存tags的多对多关系
+            article_post_form.save_m2m()
             #完成后返回文章列表
             return redirect('article:article_list')
         #如果数据不合法，返回错误信息
