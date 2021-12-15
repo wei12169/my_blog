@@ -103,7 +103,7 @@ def profile_edit(request, id):
             profile.bio = profile_cd['bio']
             if 'avatar' in request.FILES:
                 if profile.avatar:
-                    os.remove("./media/"+str(profile.avatar))
+                    os.remove("/home/byb/code/django_project/my_blog/media/"+str(profile.avatar))
                 profile.avatar = profile_cd['avatar']
             profile.save()
             #带参数的redirect()

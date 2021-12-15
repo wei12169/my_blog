@@ -176,7 +176,7 @@ def article_update(request, id):
                 article.column = None
             if request.FILES.get('avatar'):
                 if article.avatar:
-                    os.remove("./media/"+str(article.avatar))
+                    os.remove("/home/byb/code/django_project/my_blog/media/"+str(article.avatar))
                 article.avatar = request.FILES.get('avatar')
             article.tags.set(*request.POST.get('tags').split(','), clear=True)
             article.save()
