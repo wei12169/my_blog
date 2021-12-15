@@ -1,3 +1,4 @@
+import os
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
@@ -101,6 +102,8 @@ def profile_edit(request, id):
             profile.phone = profile_cd['phone']
             profile.bio = profile_cd['bio']
             if 'avatar' in request.FILES:
+                if profile.avatar:
+                    os.remove("./media/"+str(profile.avatar))
                 profile.avatar = profile_cd['avatar']
             profile.save()
             #带参数的redirect()

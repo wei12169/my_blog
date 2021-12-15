@@ -1,3 +1,4 @@
+import os
 from django.contrib.auth.models import User
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
@@ -173,6 +174,11 @@ def article_update(request, id):
                 article.column = ArticleColumn.objects.get(id=request.POST['column'])
             else:
                 article.column = None
+            if request.FILES.get('avatar'):
+                if article.avatar:
+                    os.remove("./media/"+str(article.avatar))
+                article.avatar = request.FILES.get('avatar')
+            article.tags.set(*request.POST.get('tags').split(','), clear=True)
             article.save()
             # 完成后返回到修改后的文章中。需传入文章的 id 值
             return redirect("article:article_detail", id=id)
@@ -185,6 +191,11 @@ def article_update(request, id):
         article_post_form = ArticlePostForm()
         columns = ArticleColumn.objects.all()
         # 赋值上下文，将 article 文章对象也传递进去，以便提取旧的内容
-        context = {'article': article, 'article_post_form': article_post_form, 'columns':columns,}
+        context = {
+            'article': article, 
+            'article_post_form': article_post_form, 
+            'columns':columns,
+            'tags': ','.join([x for x in article.tags.names()]),
+            }
         # 将响应返回到模板中
         return render(request, 'article/update.html', context)
