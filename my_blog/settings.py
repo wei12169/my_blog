@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'comment',
     'taggit',
     'ckeditor',
+    'mptt'
     
 ]
 
@@ -135,7 +136,7 @@ STATIC_URL = '/static/'
 # SMTP服务器，改为你的邮箱的smtp!
 EMAIL_HOST = 'smtp.qq.com'
 # 改为你自己的邮箱名！
-EMAIL_HOST_USER = '1191763804@qq.com'
+EMAIL_HOST_USER = '******@qq.com'
 # 你的邮箱密码
 EMAIL_HOST_PASSWORD = '*****'
 # 发送邮件的端口
@@ -143,7 +144,7 @@ EMAIL_PORT = 25
 # 是否使用 TLS
 EMAIL_USE_TLS = True
 # 默认的发件人
-DEFAULT_FROM_EMAIL = 'wei12169\'blog <1191763804@qq.com>'
+DEFAULT_FROM_EMAIL = '******\'blog <******@qq.com>'
 
 #媒体文件位置
 MEDIA_URL = '/media/'
