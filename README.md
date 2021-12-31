@@ -1,4 +1,4 @@
-+ 写完第27章
++ 写完第36章(35没写，完成了大部分基础功能，bug:二级回复无反应)
 ```
 Username (leave blank to use 'root'): ******
 Email address: ******@qq.com
