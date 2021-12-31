@@ -17,6 +17,14 @@ class ArticleColumn(models.Model):
 
 #博客文章数据类型
 class ArticlePost(models.Model):
+    def was_created_recently(self):
+        diff = timezone.now() - self.created
+        
+        # if diff.days <= 0 and diff.seconds < 60:
+        if diff.days == 0 and diff.seconds >= 0 and diff.seconds < 60:
+            return True
+        else:
+            return False
     #文章栏目的'一对多'外键
     column = models.ForeignKey(
         ArticleColumn,
